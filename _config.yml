@@ -1,0 +1,7 @@
+title: Brennan Flannery, PhD
+description: AI Scientist — Medical Imaging & Computational Oncology
+url: ""
+baseurl: ""
+
+# Disable Jekyll theme so plain HTML is served as-is
+theme: null

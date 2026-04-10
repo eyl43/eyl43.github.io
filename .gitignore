@@ -1,0 +1,13 @@
+# CV document
+*.docx
+
+# Original images (pre-copy, with spaces in filenames)
+/Headshot.jpeg
+/PhD_Defense.jpeg
+/IEEE-BHI Conference Presentation.jpeg
+/SPIE Medical Imaging Best Paper Award.jpeg
+/SPIE Medical Imaging Presentation.jpeg
+/Screenshot*.png
+
+# macOS
+.DS_Store
