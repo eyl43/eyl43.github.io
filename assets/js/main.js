@@ -1,5 +1,5 @@
 /* ===========================
-   MAIN.JS — Brennan Flannery Personal Site
+   MAIN.JS — Eric Y. Lu Personal Site
 =========================== */
 
 // ===== NAV SCROLL EFFECT =====
@@ -53,22 +53,59 @@ document.querySelectorAll('.pub-tab').forEach(tab => {
   });
 });
 
-// ===== LIGHTBOX =====
+// ===== LIGHTBOX (images + videos including AVI) =====
 const lightbox = document.querySelector('.lightbox');
 const lightboxImg = lightbox?.querySelector('.lightbox-img');
+const lightboxVideo = lightbox?.querySelector('.lightbox-video');
 const lightboxCaption = lightbox?.querySelector('.lightbox-caption');
 const lightboxClose = lightbox?.querySelector('.lightbox-close');
+
+function isVideoSrc(src) {
+  return /\.(mp4|avi|webm|mov|mkv|ogv)$/i.test(src);
+}
+
+function getVideoMime(src) {
+  const ext = (src.split('.').pop().split('?')[0] || '').toLowerCase();
+  const mimeMap = {
+    mp4: 'video/mp4',
+    avi: 'video/avi',
+    webm: 'video/webm',
+    mov: 'video/quicktime',
+    mkv: 'video/x-matroska',
+    ogv: 'video/ogg',
+  };
+  return mimeMap[ext] || 'video/mp4';
+}
 
 document.querySelectorAll('.gallery-item').forEach(item => {
   item.addEventListener('click', () => {
     const src = item.dataset.src;
-    const caption = item.dataset.caption;
-    if (lightboxImg && lightboxCaption && lightbox) {
+    const caption = item.dataset.caption || '';
+    if (!lightbox || !lightboxImg || !lightboxVideo || !lightboxCaption) return;
+
+    if (isVideoSrc(src)) {
+      lightboxImg.style.display = 'none';
+      lightboxVideo.style.display = 'block';
+      // Set sources for the detected type plus common fallbacks
+      lightboxVideo.innerHTML = `
+        <source src="${src}" type="${getVideoMime(src)}">
+        <source src="${src}" type="video/mp4">
+        <source src="${src}" type="video/avi">
+        <source src="${src}" type="video/x-msvideo">
+        <source src="${src}" type="video/webm">
+      `;
+      lightboxVideo.load();
+      lightboxVideo.play().catch(() => {});
+    } else {
+      lightboxVideo.pause();
+      lightboxVideo.style.display = 'none';
+      lightboxImg.style.display = 'block';
       lightboxImg.src = src;
-      lightboxCaption.textContent = caption;
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
     }
+
+    lightboxCaption.textContent = caption;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
   });
 });
 
@@ -83,6 +120,11 @@ document.addEventListener('keydown', (e) => {
 function closeLightbox() {
   lightbox?.classList.remove('open');
   document.body.style.overflow = '';
+  if (lightboxVideo) {
+    lightboxVideo.pause();
+    lightboxVideo.innerHTML = '';
+  }
+  if (lightboxImg) lightboxImg.src = '';
 }
 
 // ===== FADE-IN OBSERVER =====
@@ -102,7 +144,7 @@ fadeElements.forEach(el => observer.observe(el));
 const track = document.querySelector('.gallery-track');
 if (track) {
   const items = track.innerHTML;
-  track.innerHTML = items + items; // duplicate for seamless loop
+  track.innerHTML = items + items;
 }
 
 // ===== SMOOTH HERO PARALLAX =====
