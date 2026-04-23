@@ -1,13 +1,18 @@
 # CV document
 *.docx
 
-# Original images (pre-copy, with spaces in filenames)
-/Headshot.jpeg
-/PhD_Defense.jpeg
-/IEEE-BHI Conference Presentation.jpeg
-/SPIE Medical Imaging Best Paper Award.jpeg
-/SPIE Medical Imaging Presentation.jpeg
-/Screenshot*.png
+# Old images folder (Brennan's assets, replaced by images_new/)
+/images/
+
+# Untracked originals with spaces in filenames
+/headshot 2026.jpg
+/3dvh video s3.mp4
 
 # macOS
 .DS_Store
+
+# Jekyll build output
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata

@@ -1,7 +1,7 @@
-title: Brennan Flannery, PhD
-description: AI Scientist — Medical Imaging & Computational Oncology
-url: ""
-baseurl: ""
+title: Eric Y. Lu
+description: PhD Candidate in Biomedical Engineering — Biophotonics & 3D Microscopy
+url: "https://eyl43.github.io"
+baseurl: "/ericylu.github.io"
 
 # Disable Jekyll theme so plain HTML is served as-is
 theme: null
